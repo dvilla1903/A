@@ -74,9 +74,10 @@ export default function PersonalDashboard() {
       {/* Quick Add Button */}
       <button
         onClick={() => setShowAddModal(true)}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] transition-all hover:scale-105 z-40"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer z-40"
+        aria-label="Agregar transacción"
       >
-        <Plus className="w-6 h-6 text-black" />
+        <Plus className="w-6 h-6 text-black" aria-hidden="true" />
       </button>
 
       {/* Stats */}
@@ -154,7 +155,7 @@ export default function PersonalDashboard() {
         <div className="flex gap-2 mb-4">
           <button
             onClick={() => setAddType('income')}
-            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
               addType === 'income' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'
             }`}
           >
@@ -162,34 +163,52 @@ export default function PersonalDashboard() {
           </button>
           <button
             onClick={() => setAddType('expense')}
-            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
               addType === 'expense' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'
             }`}
           >
             Gasto
           </button>
         </div>
-        <form onSubmit={handleQuickAdd} className="space-y-3">
+        <form onSubmit={handleQuickAdd} className="space-y-3" role="form" aria-label={addType === 'income' ? 'Agregar ingreso' : 'Agregar gasto'}>
           {addType === 'income' ? (
             <>
-              <input name="source" placeholder="Fuente de ingreso" required className="w-full" autoFocus />
-              <select name="category" className="w-full">
-                {INCOME_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Fuente de ingreso</span>
+                <input name="source" placeholder="Fuente de ingreso" required className="w-full" autoFocus />
+              </label>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+                <select name="category" className="w-full">
+                  {INCOME_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </label>
             </>
           ) : (
             <>
-              <input name="description" placeholder="Descripción del gasto" required className="w-full" autoFocus />
-              <select name="category" className="w-full">
-                {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Descripción del gasto</span>
+                <input name="description" placeholder="Descripción del gasto" required className="w-full" autoFocus />
+              </label>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+                <select name="category" className="w-full">
+                  {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </label>
             </>
           )}
-          <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" />
-          <input name="date" type="date" defaultValue={todayString()} required className="w-full" />
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto</span>
+            <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha</span>
+            <input name="date" type="date" defaultValue={todayString()} required className="w-full" />
+          </label>
           <button
             type="submit"
-            className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors"
+            className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer"
           >
             Guardar
           </button>

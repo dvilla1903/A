@@ -40,14 +40,14 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto" role="main" aria-label="Settings page">
       <h1 className="text-2xl font-semibold text-white mb-1">Configuración</h1>
       <p className="text-zinc-500 text-sm mb-8">Gestión de datos y exportaciones</p>
 
       {/* Data Stats */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 mb-6">
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 mb-6" role="region" aria-label="Stored data statistics">
         <div className="flex items-center gap-3 mb-4">
-          <Database className="w-5 h-5 text-[#22c55e]" strokeWidth={1.5} />
+          <Database className="w-5 h-5 text-[#22c55e]" strokeWidth={1.5} aria-hidden="true" />
           <h2 className="text-white font-medium">Datos almacenados</h2>
         </div>
         <div className="grid grid-cols-2 gap-3 text-sm">
@@ -79,9 +79,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Export */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 mb-6">
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6 mb-6" role="region" aria-label="Export data as CSV">
         <div className="flex items-center gap-3 mb-4">
-          <Download className="w-5 h-5 text-[#22c55e]" strokeWidth={1.5} />
+          <Download className="w-5 h-5 text-[#22c55e]" strokeWidth={1.5} aria-hidden="true" />
           <h2 className="text-white font-medium">Exportar datos (CSV)</h2>
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -95,9 +95,10 @@ export default function SettingsPage() {
             <button
               key={item.key}
               onClick={() => handleExport(item.key)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-zinc-300 hover:text-white hover:border-[#3a3a3a] transition-colors"
+              aria-label={`Export ${item.label} as CSV`}
+              className="flex items-center gap-2 px-4 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-zinc-300 hover:text-white hover:border-[#3a3a3a] transition-colors duration-200 cursor-pointer active:scale-[0.98]"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5" aria-hidden="true" />
               {item.label}
             </button>
           ))}

@@ -25,9 +25,13 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-[72px] bg-[#0a0a0a] border-r border-[#1a1a1a] flex flex-col items-center py-6 z-50">
+    <aside
+      className="fixed left-0 top-0 bottom-0 w-[72px] bg-[#0a0a0a] border-r border-[#1a1a1a] flex flex-col items-center py-6 z-50"
+      role="navigation"
+      aria-label="Navegación principal"
+    >
       <div className="mb-10 flex flex-col items-center gap-1">
-        <div className="w-9 h-9 rounded-lg bg-[#22c55e] flex items-center justify-center">
+        <div className="w-9 h-9 rounded-lg bg-[#22c55e] flex items-center justify-center" aria-hidden="true">
           <TrendingUp className="w-5 h-5 text-black" strokeWidth={2.5} />
         </div>
         <span className="text-[9px] text-zinc-500 font-medium tracking-wider uppercase mt-1">
@@ -35,7 +39,7 @@ export default function Sidebar() {
         </span>
       </div>
 
-      <nav className="flex flex-col items-center gap-2 flex-1">
+      <nav className="flex flex-col items-center gap-2 flex-1" aria-label="Secciones">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
@@ -43,15 +47,17 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={active ? 'page' : undefined}
               className={`
-                group flex flex-col items-center gap-1 p-2.5 rounded-xl transition-all duration-200
+                group flex flex-col items-center gap-1 p-2.5 rounded-xl
+                transition-colors duration-200
                 ${active
                   ? 'bg-[#22c55e]/10 text-[#22c55e]'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-[#1a1a1a]'
                 }
               `}
             >
-              <Icon className="w-5 h-5" strokeWidth={1.5} />
+              <Icon className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
               <span className="text-[10px] font-medium">{item.label}</span>
             </Link>
           );
@@ -60,15 +66,18 @@ export default function Sidebar() {
 
       <Link
         href="/settings"
+        aria-current={pathname === '/settings' ? 'page' : undefined}
+        aria-label="Configuración"
         className={`
-          flex flex-col items-center gap-1 p-2.5 rounded-xl transition-all duration-200
+          flex flex-col items-center gap-1 p-2.5 rounded-xl
+          transition-colors duration-200
           ${pathname === '/settings'
             ? 'bg-[#22c55e]/10 text-[#22c55e]'
             : 'text-zinc-500 hover:text-zinc-300 hover:bg-[#1a1a1a]'
           }
         `}
       >
-        <Settings className="w-5 h-5" strokeWidth={1.5} />
+        <Settings className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
         <span className="text-[10px] font-medium">Settings</span>
       </Link>
     </aside>

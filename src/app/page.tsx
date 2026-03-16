@@ -92,7 +92,7 @@ export default function OverviewPage() {
   }, [store.personalIncome, store.personalExpenses, store.businessRevenue, store.businessExpenses]);
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto" role="main" aria-label="Financial overview dashboard">
       <h1 className="text-2xl font-semibold text-white mb-1">Overview</h1>
       <p className="text-zinc-500 text-sm mb-8">Vista consolidada de tus finanzas personales y de negocio</p>
 
@@ -119,29 +119,31 @@ export default function OverviewPage() {
       </div>
 
       {/* Combined Chart */}
-      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
+      <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6" role="region" aria-label="Cash flow chart for the last 6 months">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-white font-medium">Flujo de caja — Últimos 6 meses</h3>
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <fieldset className="flex items-center gap-4" role="group" aria-label="Chart series filters">
+            <label htmlFor="toggle-personal" className="flex items-center gap-2 text-sm cursor-pointer">
               <input
+                id="toggle-personal"
                 type="checkbox"
                 checked={showPersonal}
                 onChange={(e) => setShowPersonal(e.target.checked)}
-                className="w-3.5 h-3.5 accent-[#22c55e] rounded"
+                className="w-3.5 h-3.5 accent-[#22c55e] rounded cursor-pointer"
               />
               <span className="text-zinc-400">Personal</span>
             </label>
-            <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <label htmlFor="toggle-business" className="flex items-center gap-2 text-sm cursor-pointer">
               <input
+                id="toggle-business"
                 type="checkbox"
                 checked={showBusiness}
                 onChange={(e) => setShowBusiness(e.target.checked)}
-                className="w-3.5 h-3.5 accent-[#4ade80] rounded"
+                className="w-3.5 h-3.5 accent-[#4ade80] rounded cursor-pointer"
               />
               <span className="text-zinc-400">Negocio</span>
             </label>
-          </div>
+          </fieldset>
         </div>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
