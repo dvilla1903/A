@@ -82,9 +82,10 @@ export default function BusinessDashboard() {
     <div>
       <button
         onClick={() => setShowAddModal(true)}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] transition-all hover:scale-105 z-40"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer z-40"
+        aria-label="Agregar transacción"
       >
-        <Plus className="w-6 h-6 text-black" />
+        <Plus className="w-6 h-6 text-black" aria-hidden="true" />
       </button>
 
       {/* P&L Summary */}
@@ -155,38 +156,59 @@ export default function BusinessDashboard() {
 
       <Modal open={showAddModal} onClose={() => setShowAddModal(false)} title="Agregar transacción">
         <div className="flex gap-2 mb-4">
-          <button onClick={() => setAddType('revenue')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${addType === 'revenue' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'}`}>
+          <button onClick={() => setAddType('revenue')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${addType === 'revenue' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'}`}>
             Ingreso
           </button>
-          <button onClick={() => setAddType('expense')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${addType === 'expense' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'}`}>
+          <button onClick={() => setAddType('expense')} className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${addType === 'expense' ? 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30' : 'bg-[#1a1a1a] text-zinc-400 border border-[#2a2a2a]'}`}>
             Gasto
           </button>
         </div>
-        <form onSubmit={handleQuickAdd} className="space-y-3">
+        <form onSubmit={handleQuickAdd} className="space-y-3" role="form" aria-label="Agregar transacción">
           {addType === 'revenue' ? (
             <>
-              <input name="client" placeholder="Cliente / Fuente" required className="w-full" autoFocus />
-              <select name="type" className="w-full">
-                <option value="service">Servicio</option>
-                <option value="product">Producto</option>
-              </select>
-              <select name="status" className="w-full">
-                <option value="paid">Pagado</option>
-                <option value="pending">Pendiente</option>
-                <option value="partial">Parcial</option>
-              </select>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Cliente / Fuente</span>
+                <input name="client" placeholder="Cliente / Fuente" required className="w-full" autoFocus />
+              </label>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Tipo</span>
+                <select name="type" className="w-full">
+                  <option value="service">Servicio</option>
+                  <option value="product">Producto</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Estado</span>
+                <select name="status" className="w-full">
+                  <option value="paid">Pagado</option>
+                  <option value="pending">Pendiente</option>
+                  <option value="partial">Parcial</option>
+                </select>
+              </label>
             </>
           ) : (
             <>
-              <input name="description" placeholder="Descripción" required className="w-full" autoFocus />
-              <select name="category" className="w-full">
-                {BUSINESS_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Descripción</span>
+                <input name="description" placeholder="Descripción" required className="w-full" autoFocus />
+              </label>
+              <label className="block">
+                <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+                <select name="category" className="w-full">
+                  {BUSINESS_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </label>
             </>
           )}
-          <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" />
-          <input name="date" type="date" defaultValue={todayString()} required className="w-full" />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto</span>
+            <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha</span>
+            <input name="date" type="date" defaultValue={todayString()} required className="w-full" />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer active:scale-[0.98]">
             Guardar
           </button>
         </form>

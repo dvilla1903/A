@@ -52,9 +52,9 @@ export default function IncomePage() {
         </div>
         <button
           onClick={() => { setEditId(null); setShowModal(true); }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4" aria-hidden="true" />
           Agregar ingreso
         </button>
       </div>
@@ -83,18 +83,20 @@ export default function IncomePage() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-[#22c55e] font-semibold">{formatCurrency(entry.amount)}</span>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <button
                     onClick={() => { setEditId(entry.id); setShowModal(true); }}
-                    className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer"
+                    aria-label={`Editar ${entry.source}`}
                   >
-                    <Pencil className="w-3.5 h-3.5" />
+                    <Pencil className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                   <button
                     onClick={() => store.deletePersonalIncome(entry.id)}
-                    className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer"
+                    aria-label={`Eliminar ${entry.source}`}
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>

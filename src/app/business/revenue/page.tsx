@@ -86,8 +86,8 @@ export default function RevenuePage() {
             <span className="text-[#4ade80] font-semibold">{formatCurrency(productTotal)}</span>
           </div>
         </div>
-        <button onClick={() => { setEditId(null); setShowModal(true); }} className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors">
-          <Plus className="w-4 h-4" /> Agregar ingreso
+        <button onClick={() => { setEditId(null); setShowModal(true); }} className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer active:scale-[0.98]">
+          <Plus className="w-4 h-4" aria-hidden="true" /> Agregar ingreso
         </button>
       </div>
 

@@ -106,9 +106,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Danger Zone */}
-      <div className="bg-[#1a1a1a] border border-red-500/20 rounded-xl p-6">
+      <div className="bg-[#1a1a1a] border border-red-500/20 rounded-xl p-6" role="region" aria-label="Danger zone - destructive actions">
         <div className="flex items-center gap-3 mb-4">
-          <Trash2 className="w-5 h-5 text-red-400" strokeWidth={1.5} />
+          <Trash2 className="w-5 h-5 text-red-400" strokeWidth={1.5} aria-hidden="true" />
           <h2 className="text-red-400 font-medium">Zona de peligro</h2>
         </div>
         <p className="text-zinc-500 text-sm mb-4">
@@ -116,7 +116,8 @@ export default function SettingsPage() {
         </p>
         <button
           onClick={handleClearAll}
-          className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+          aria-label={confirmClear ? 'Confirm: delete all data permanently' : 'Delete all data'}
+          className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer active:scale-[0.98] ${
             confirmClear
               ? 'bg-red-500 text-white'
               : 'bg-red-500/10 text-red-400 hover:bg-red-500/20'

@@ -74,8 +74,8 @@ export default function PersonalDashboard() {
       {/* Quick Add Button */}
       <button
         onClick={() => setShowAddModal(true)}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer z-40"
-        aria-label="Agregar transacción"
+        className="fixed bottom-8 right-8 w-14 h-14 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-[#22c55e]/20 hover:bg-[#16a34a] hover:shadow-xl hover:shadow-[#22c55e]/30 transition-all duration-200 cursor-pointer active:scale-[0.98] z-40"
+        aria-label="Add new transaction"
       >
         <Plus className="w-6 h-6 text-black" aria-hidden="true" />
       </button>
