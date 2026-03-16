@@ -84,7 +84,7 @@ export default function SavingsPage() {
             const status = getStatus(goal);
 
             return (
-              <div key={goal.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 group hover:border-[#3a3a3a] transition-colors">
+              <div key={goal.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 group hover:border-[#3a3a3a] transition-colors duration-200">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-white font-medium">{goal.name}</h3>
                   <div className="flex items-center gap-2">
@@ -94,12 +94,12 @@ export default function SavingsPage() {
                     }}>
                       {status.label}
                     </span>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => { setEditId(goal.id); setShowGoalModal(true); }} className="p-1 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors">
-                        <Pencil className="w-3 h-3" />
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <button onClick={() => { setEditId(goal.id); setShowGoalModal(true); }} className="p-1 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer" aria-label={`Editar ${goal.name}`}>
+                        <Pencil className="w-3 h-3" aria-hidden="true" />
                       </button>
-                      <button onClick={() => store.deleteSavingsGoal(goal.id)} className="p-1 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-3 h-3" />
+                      <button onClick={() => store.deleteSavingsGoal(goal.id)} className="p-1 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer" aria-label={`Eliminar ${goal.name}`}>
+                        <Trash2 className="w-3 h-3" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -121,9 +121,10 @@ export default function SavingsPage() {
                   <span className="text-zinc-600 text-xs">Meta: {goal.targetDate} · {pct.toFixed(0)}%</span>
                   <button
                     onClick={() => { setContribGoalId(goal.id); setShowContribModal(true); }}
-                    className="flex items-center gap-1 text-xs text-[#22c55e] hover:text-[#4ade80] transition-colors font-medium"
+                    className="flex items-center gap-1 text-xs text-[#22c55e] hover:text-[#4ade80] transition-colors duration-200 font-medium cursor-pointer"
+                    aria-label={`Contribuir a ${goal.name}`}
                   >
-                    <TrendingUp className="w-3 h-3" />
+                    <TrendingUp className="w-3 h-3" aria-hidden="true" />
                     Contribuir
                   </button>
                 </div>
@@ -134,20 +135,32 @@ export default function SavingsPage() {
       )}
 
       <Modal open={showGoalModal} onClose={() => { setShowGoalModal(false); setEditId(null); }} title={editId ? 'Editar meta' : 'Nueva meta de ahorro'}>
-        <form onSubmit={handleGoalSubmit} className="space-y-3">
-          <input name="name" placeholder="Nombre de la meta" required className="w-full" defaultValue={editEntry?.name} autoFocus />
-          <input name="targetAmount" type="number" placeholder="Monto objetivo" required className="w-full" min="0" defaultValue={editEntry?.targetAmount} />
-          <input name="targetDate" type="date" required className="w-full" defaultValue={editEntry?.targetDate} />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleGoalSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar meta' : 'Nueva meta de ahorro'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Nombre de la meta</span>
+            <input name="name" placeholder="Nombre de la meta" required className="w-full" defaultValue={editEntry?.name} autoFocus />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto objetivo</span>
+            <input name="targetAmount" type="number" placeholder="Monto objetivo" required className="w-full" min="0" defaultValue={editEntry?.targetAmount} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha objetivo</span>
+            <input name="targetDate" type="date" required className="w-full" defaultValue={editEntry?.targetDate} />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer">
             {editId ? 'Actualizar' : 'Crear meta'}
           </button>
         </form>
       </Modal>
 
       <Modal open={showContribModal} onClose={() => { setShowContribModal(false); setContribGoalId(null); }} title="Registrar contribución">
-        <form onSubmit={handleContribSubmit} className="space-y-3">
-          <input name="amount" type="number" placeholder="Monto a contribuir" required className="w-full" min="0" autoFocus />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleContribSubmit} className="space-y-3" role="form" aria-label="Registrar contribución">
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto a contribuir</span>
+            <input name="amount" type="number" placeholder="Monto a contribuir" required className="w-full" min="0" autoFocus />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer">
             Contribuir
           </button>
         </form>
