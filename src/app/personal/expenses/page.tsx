@@ -73,24 +73,33 @@ export default function ExpensesPage() {
         </div>
         <button
           onClick={() => { setEditId(null); setShowModal(true); }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4" aria-hidden="true" />
           Agregar gasto
         </button>
       </div>
 
       {showFilters && (
-        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 mb-6 flex gap-4 animate-in">
-          <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)} className="flex-1">
-            <option value="all">Todas las categorías</option>
-            {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <input type="date" value={filterDateFrom} onChange={e => setFilterDateFrom(e.target.value)} placeholder="Desde" className="flex-1" />
-          <input type="date" value={filterDateTo} onChange={e => setFilterDateTo(e.target.value)} placeholder="Hasta" className="flex-1" />
+        <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-4 mb-6 flex gap-4 animate-in" role="search" aria-label="Filtros de gastos">
+          <label className="flex-1 block">
+            <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+            <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)} className="w-full">
+              <option value="all">Todas las categorías</option>
+              {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+          <label className="flex-1 block">
+            <span className="text-zinc-400 text-xs mb-1 block">Desde</span>
+            <input type="date" value={filterDateFrom} onChange={e => setFilterDateFrom(e.target.value)} placeholder="Desde" className="w-full" />
+          </label>
+          <label className="flex-1 block">
+            <span className="text-zinc-400 text-xs mb-1 block">Hasta</span>
+            <input type="date" value={filterDateTo} onChange={e => setFilterDateTo(e.target.value)} placeholder="Hasta" className="w-full" />
+          </label>
           <button
             onClick={() => { setFilterCategory('all'); setFilterDateFrom(''); setFilterDateTo(''); }}
-            className="px-3 py-2 text-zinc-500 hover:text-white text-sm transition-colors"
+            className="px-3 py-2 text-zinc-500 hover:text-white text-sm transition-colors duration-200 cursor-pointer self-end"
           >
             Limpiar
           </button>
@@ -108,13 +117,13 @@ export default function ExpensesPage() {
       ) : (
         <div className="space-y-2">
           {filtered.map(entry => (
-            <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors">
+            <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors duration-200">
               <div className="flex items-center gap-4">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[entry.category] || '#22c55e' }} />
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="text-white font-medium">{entry.description}</p>
-                    {entry.isRecurring && <RefreshCw className="w-3 h-3 text-zinc-500" />}
+                    {entry.isRecurring && <RefreshCw className="w-3 h-3 text-zinc-500" aria-hidden="true" />}
                   </div>
                   <p className="text-zinc-500 text-sm">{entry.date}{entry.note ? ` · ${entry.note}` : ''}</p>
                 </div>
@@ -127,12 +136,12 @@ export default function ExpensesPage() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-white font-semibold">{formatCurrency(entry.amount)}</span>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors">
-                    <Pencil className="w-3.5 h-3.5" />
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer" aria-label={`Editar ${entry.description}`}>
+                    <Pencil className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
-                  <button onClick={() => store.deletePersonalExpense(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors">
-                    <Trash2 className="w-3.5 h-3.5" />
+                  <button onClick={() => store.deletePersonalExpense(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer" aria-label={`Eliminar ${entry.description}`}>
+                    <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -142,19 +151,34 @@ export default function ExpensesPage() {
       )}
 
       <Modal open={showModal} onClose={() => { setShowModal(false); setEditId(null); }} title={editId ? 'Editar gasto' : 'Agregar gasto'}>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input name="description" placeholder="Descripción" required className="w-full" defaultValue={editEntry?.description} autoFocus />
-          <select name="category" className="w-full" defaultValue={editEntry?.category || 'food'}>
-            {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
-          <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
-          <input name="note" placeholder="Nota (opcional)" className="w-full" defaultValue={editEntry?.note} />
+        <form onSubmit={handleSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar gasto' : 'Agregar gasto'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Descripción</span>
+            <input name="description" placeholder="Descripción" required className="w-full" defaultValue={editEntry?.description} autoFocus />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+            <select name="category" className="w-full" defaultValue={editEntry?.category || 'food'}>
+              {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto</span>
+            <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha</span>
+            <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Nota (opcional)</span>
+            <input name="note" placeholder="Nota (opcional)" className="w-full" defaultValue={editEntry?.note} />
+          </label>
           <label className="flex items-center gap-2 text-sm text-zinc-400 cursor-pointer">
             <input type="checkbox" name="isRecurring" defaultChecked={editEntry?.isRecurring} className="accent-[#22c55e]" />
             Gasto recurrente
           </label>
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer">
             {editId ? 'Actualizar' : 'Guardar'}
           </button>
         </form>

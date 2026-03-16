@@ -77,7 +77,7 @@ export default function CashFlowPage() {
         <EmptyState icon={TrendingUp} title="Sin datos para proyectar" description="Registra ingresos y gastos para ver la proyección de flujo de caja" />
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-3 gap-4 mb-8" role="region" aria-label="Resumen de flujo de caja">
             <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5">
               <p className="text-zinc-400 text-sm mb-1">Balance actual</p>
               <p className={`text-xl font-semibold ${forecast.currentBalance >= 0 ? 'text-[#22c55e]' : 'text-red-400'}`}>

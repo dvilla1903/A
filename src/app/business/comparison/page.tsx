@@ -84,7 +84,7 @@ export default function ComparisonPage() {
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-zinc-400 text-sm font-medium">{metric.label}</span>
                     <div className={`flex items-center gap-1 text-sm font-medium ${isPositive ? 'text-[#22c55e]' : 'text-red-400'}`}>
-                      {delta > 0 ? <ArrowUpRight className="w-4 h-4" /> : delta < 0 ? <ArrowDownRight className="w-4 h-4" /> : <Minus className="w-4 h-4" />}
+                      {delta > 0 ? <ArrowUpRight className="w-4 h-4" aria-hidden="true" /> : delta < 0 ? <ArrowDownRight className="w-4 h-4" aria-hidden="true" /> : <Minus className="w-4 h-4" aria-hidden="true" />}
                       <span>{delta > 0 ? '+' : ''}{delta.toFixed(1)}%</span>
                     </div>
                   </div>

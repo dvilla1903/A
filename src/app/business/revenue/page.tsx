@@ -112,7 +112,7 @@ export default function RevenuePage() {
           {sorted.map(entry => {
             const sc = statusColors[entry.status];
             return (
-              <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors">
+              <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors duration-200">
                 <div className="flex items-center gap-4">
                   <div>
                     <p className="text-white font-medium">{entry.client}</p>

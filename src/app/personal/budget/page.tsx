@@ -45,9 +45,9 @@ export default function BudgetPage() {
         <p className="text-zinc-400 text-sm">Define límites de gasto por categoría para controlar tus finanzas</p>
         <button
           onClick={() => { setEditId(null); setShowModal(true); }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4" aria-hidden="true" />
           Agregar presupuesto
         </button>
       </div>
@@ -69,7 +69,7 @@ export default function BudgetPage() {
             const barColor = pct >= 100 ? '#ef4444' : pct >= 80 ? '#eab308' : '#22c55e';
 
             return (
-              <div key={budget.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 group hover:border-[#3a3a3a] transition-colors">
+              <div key={budget.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-5 group hover:border-[#3a3a3a] transition-colors duration-200">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <span className="text-white font-medium capitalize">{budget.category}</span>
@@ -84,12 +84,12 @@ export default function BudgetPage() {
                     <span className="text-zinc-400 text-sm">
                       {formatCurrency(remaining > 0 ? remaining : 0)} restante de {formatCurrency(budget.limit)}
                     </span>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => { setEditId(budget.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors">
-                        <Pencil className="w-3.5 h-3.5" />
+                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <button onClick={() => { setEditId(budget.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer" aria-label={`Editar presupuesto ${budget.category}`}>
+                        <Pencil className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
-                      <button onClick={() => store.deletePersonalBudget(budget.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-3.5 h-3.5" />
+                      <button onClick={() => store.deletePersonalBudget(budget.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer" aria-label={`Eliminar presupuesto ${budget.category}`}>
+                        <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -108,12 +108,18 @@ export default function BudgetPage() {
       )}
 
       <Modal open={showModal} onClose={() => { setShowModal(false); setEditId(null); }} title={editId ? 'Editar presupuesto' : 'Agregar presupuesto'}>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <select name="category" className="w-full" defaultValue={editEntry?.category || PERSONAL_EXPENSE_CATEGORIES[0]}>
-            {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <input name="limit" type="number" placeholder="Límite mensual" required className="w-full" min="0" defaultValue={editEntry?.limit} />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar presupuesto' : 'Agregar presupuesto'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+            <select name="category" className="w-full" defaultValue={editEntry?.category || PERSONAL_EXPENSE_CATEGORIES[0]}>
+              {PERSONAL_EXPENSE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Límite mensual</span>
+            <input name="limit" type="number" placeholder="Límite mensual" required className="w-full" min="0" defaultValue={editEntry?.limit} />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer">
             {editId ? 'Actualizar' : 'Guardar'}
           </button>
         </form>

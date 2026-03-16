@@ -101,14 +101,14 @@ export default function ReceivablesPage() {
                   <span className={`font-semibold ${entry.status === 'paid' ? 'text-zinc-500' : 'text-white'}`}>
                     {formatCurrency(balance)}
                   </span>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     {entry.status !== 'paid' && (
-                      <button onClick={() => store.markReceivableAsPaid(entry.id)} className="p-1.5 rounded-lg hover:bg-[#22c55e]/10 text-zinc-500 hover:text-[#22c55e] transition-colors" title="Marcar como pagado">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
+                      <button onClick={() => store.markReceivableAsPaid(entry.id)} className="p-1.5 rounded-lg hover:bg-[#22c55e]/10 text-zinc-500 hover:text-[#22c55e] transition-colors duration-200 cursor-pointer" aria-label="Marcar como pagado">
+                        <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
                       </button>
                     )}
-                    <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => store.deleteAccountReceivable(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer" aria-label="Editar cuenta"><Pencil className="w-3.5 h-3.5" aria-hidden="true" /></button>
+                    <button onClick={() => store.deleteAccountReceivable(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer" aria-label="Eliminar cuenta"><Trash2 className="w-3.5 h-3.5" aria-hidden="true" /></button>
                   </div>
                 </div>
               </div>
@@ -118,13 +118,28 @@ export default function ReceivablesPage() {
       )}
 
       <Modal open={showModal} onClose={() => { setShowModal(false); setEditId(null); }} title={editId ? 'Editar cuenta' : 'Nueva cuenta por cobrar'}>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input name="client" placeholder="Cliente" required className="w-full" defaultValue={editEntry?.client} autoFocus />
-          <input name="description" placeholder="Descripción" required className="w-full" defaultValue={editEntry?.description} />
-          <input name="totalAmount" type="number" placeholder="Monto total" required className="w-full" min="0" defaultValue={editEntry?.totalAmount} />
-          <input name="amountPaid" type="number" placeholder="Monto pagado" required className="w-full" min="0" defaultValue={editEntry?.amountPaid || 0} />
-          <input name="dueDate" type="date" required className="w-full" defaultValue={editEntry?.dueDate || todayString()} />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar cuenta' : 'Nueva cuenta por cobrar'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Cliente</span>
+            <input name="client" placeholder="Cliente" required className="w-full" defaultValue={editEntry?.client} autoFocus />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Descripción</span>
+            <input name="description" placeholder="Descripción" required className="w-full" defaultValue={editEntry?.description} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto total</span>
+            <input name="totalAmount" type="number" placeholder="Monto total" required className="w-full" min="0" defaultValue={editEntry?.totalAmount} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto pagado</span>
+            <input name="amountPaid" type="number" placeholder="Monto pagado" required className="w-full" min="0" defaultValue={editEntry?.amountPaid || 0} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha de vencimiento</span>
+            <input name="dueDate" type="date" required className="w-full" defaultValue={editEntry?.dueDate || todayString()} />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer active:scale-[0.98]">
             {editId ? 'Actualizar' : 'Guardar'}
           </button>
         </form>

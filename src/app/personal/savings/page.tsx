@@ -62,9 +62,9 @@ export default function SavingsPage() {
         <p className="text-zinc-400 text-sm">Define metas de ahorro y registra contribuciones</p>
         <button
           onClick={() => { setEditId(null); setShowGoalModal(true); }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4" aria-hidden="true" />
           Nueva meta
         </button>
       </div>

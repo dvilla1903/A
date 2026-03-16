@@ -64,7 +64,7 @@ export default function CostAnalysisPage() {
         <EmptyState icon={BarChart3} title="Sin datos de análisis" description="Registra ingresos como Servicio o Producto para ver el análisis por línea" />
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-2 gap-6 mb-8" role="region" aria-label="Análisis por línea de negocio">
             {/* Services */}
             <div className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl p-6">
               <h3 className="text-white font-medium mb-4">Servicios</h3>
