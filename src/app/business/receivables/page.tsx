@@ -68,8 +68,8 @@ export default function ReceivablesPage() {
           <span className="text-zinc-400 text-sm">Total pendiente: </span>
           <span className="text-yellow-500 font-semibold text-lg">{formatCurrency(totalPending)}</span>
         </div>
-        <button onClick={() => { setEditId(null); setShowModal(true); }} className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors">
-          <Plus className="w-4 h-4" /> Agregar cuenta
+        <button onClick={() => { setEditId(null); setShowModal(true); }} className="flex items-center gap-2 px-4 py-2.5 bg-[#22c55e] text-black font-medium text-sm rounded-lg hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer active:scale-[0.98]">
+          <Plus className="w-4 h-4" aria-hidden="true" /> Agregar cuenta
         </button>
       </div>
 
@@ -83,7 +83,7 @@ export default function ReceivablesPage() {
             const overdue = isOverdue(entry.dueDate, entry.status);
 
             return (
-              <div key={entry.id} className={`bg-[#1a1a1a] border rounded-xl px-5 py-4 flex items-center justify-between group transition-colors ${overdue ? 'border-red-500/20 hover:border-red-500/40' : 'border-[#2a2a2a] hover:border-[#3a3a3a]'}`}>
+              <div key={entry.id} className={`bg-[#1a1a1a] border rounded-xl px-5 py-4 flex items-center justify-between group transition-colors duration-200 ${overdue ? 'border-red-500/20 hover:border-red-500/40' : 'border-[#2a2a2a] hover:border-[#3a3a3a]'}`}>
                 <div className="flex items-center gap-4 flex-1">
                   <div className="flex-1">
                     <p className="text-white font-medium">{entry.client}</p>

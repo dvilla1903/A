@@ -70,7 +70,7 @@ export default function IncomePage() {
       ) : (
         <div className="space-y-2">
           {sorted.map(entry => (
-            <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors">
+            <div key={entry.id} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-xl px-5 py-4 flex items-center justify-between group hover:border-[#3a3a3a] transition-colors duration-200">
               <div className="flex items-center gap-4">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[entry.category] || '#22c55e' }} />
                 <div>
@@ -106,14 +106,26 @@ export default function IncomePage() {
       )}
 
       <Modal open={showModal} onClose={() => { setShowModal(false); setEditId(null); }} title={editId ? 'Editar ingreso' : 'Agregar ingreso'}>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input name="source" placeholder="Fuente de ingreso" required className="w-full" defaultValue={editEntry?.source} autoFocus />
-          <select name="category" className="w-full" defaultValue={editEntry?.category || 'salary'}>
-            {INCOME_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
-          <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar ingreso' : 'Agregar ingreso'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fuente de ingreso</span>
+            <input name="source" placeholder="Fuente de ingreso" required className="w-full" defaultValue={editEntry?.source} autoFocus />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Categoría</span>
+            <select name="category" className="w-full" defaultValue={editEntry?.category || 'salary'}>
+              {INCOME_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto</span>
+            <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha</span>
+            <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 active:scale-[0.98] cursor-pointer">
             {editId ? 'Actualizar' : 'Guardar'}
           </button>
         </form>

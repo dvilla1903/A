@@ -127,9 +127,9 @@ export default function RevenuePage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-[#22c55e] font-semibold">{formatCurrency(entry.amount)}</span>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => store.deleteBusinessRevenue(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <button onClick={() => { setEditId(entry.id); setShowModal(true); }} className="p-1.5 rounded-lg hover:bg-[#2a2a2a] text-zinc-500 hover:text-white transition-colors duration-200 cursor-pointer" aria-label="Editar ingreso"><Pencil className="w-3.5 h-3.5" aria-hidden="true" /></button>
+                    <button onClick={() => store.deleteBusinessRevenue(entry.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-zinc-500 hover:text-red-400 transition-colors duration-200 cursor-pointer" aria-label="Eliminar ingreso"><Trash2 className="w-3.5 h-3.5" aria-hidden="true" /></button>
                   </div>
                 </div>
               </div>
@@ -139,20 +139,35 @@ export default function RevenuePage() {
       )}
 
       <Modal open={showModal} onClose={() => { setShowModal(false); setEditId(null); }} title={editId ? 'Editar ingreso' : 'Agregar ingreso'}>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input name="client" placeholder="Cliente / Fuente" required className="w-full" defaultValue={editEntry?.client} autoFocus />
-          <select name="type" className="w-full" defaultValue={editEntry?.type || 'service'}>
-            <option value="service">Servicio</option>
-            <option value="product">Producto</option>
-          </select>
-          <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
-          <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
-          <select name="status" className="w-full" defaultValue={editEntry?.status || 'paid'}>
-            <option value="paid">Pagado</option>
-            <option value="pending">Pendiente</option>
-            <option value="partial">Parcial</option>
-          </select>
-          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors">
+        <form onSubmit={handleSubmit} className="space-y-3" role="form" aria-label={editId ? 'Editar ingreso' : 'Agregar ingreso'}>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Cliente / Fuente</span>
+            <input name="client" placeholder="Cliente / Fuente" required className="w-full" defaultValue={editEntry?.client} autoFocus />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Tipo</span>
+            <select name="type" className="w-full" defaultValue={editEntry?.type || 'service'}>
+              <option value="service">Servicio</option>
+              <option value="product">Producto</option>
+            </select>
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Monto</span>
+            <input name="amount" type="number" placeholder="Monto" required className="w-full" min="0" defaultValue={editEntry?.amount} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Fecha</span>
+            <input name="date" type="date" required className="w-full" defaultValue={editEntry?.date || todayString()} />
+          </label>
+          <label className="block">
+            <span className="text-zinc-400 text-xs mb-1 block">Estado</span>
+            <select name="status" className="w-full" defaultValue={editEntry?.status || 'paid'}>
+              <option value="paid">Pagado</option>
+              <option value="pending">Pendiente</option>
+              <option value="partial">Parcial</option>
+            </select>
+          </label>
+          <button type="submit" className="w-full py-2.5 bg-[#22c55e] text-black font-medium rounded-lg hover:bg-[#16a34a] transition-colors duration-200 cursor-pointer active:scale-[0.98]">
             {editId ? 'Actualizar' : 'Guardar'}
           </button>
         </form>

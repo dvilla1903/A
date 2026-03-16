@@ -62,11 +62,12 @@ export default function ExpensesPage() {
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer ${
               showFilters ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#1a1a1a] text-zinc-400 hover:text-white border border-[#2a2a2a]'
             }`}
+            aria-label="Mostrar filtros"
           >
-            <Filter className="w-4 h-4" />
+            <Filter className="w-4 h-4" aria-hidden="true" />
             Filtros
           </button>
         </div>
